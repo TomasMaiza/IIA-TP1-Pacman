@@ -90,7 +90,48 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    startState = problem.getStartState()
+    print("Start:", startState)
+    print("Is the start a goal?", problem.isGoalState(startState))
+    print("Start's successors:", problem.getSuccessors(startState))
+    path = util.Stack()
+    s = util.Stack()
+
+    visited = set()
+
+    for node in problem.getSuccessors(startState):
+        s.push(node) # pusheamos al stack los sucesores del estado inicial
+
+    while not s.isEmpty(): # si hay nodos en la pila, recorremos
+        currNode = s.pop()
+        visited.add(currNode[0])
+        path.push(currNode[1])
+        if problem.isGoalState(currNode[0]): # si el nodo es meta terminamos la búsqueda
+            return path.list
+        
+        options = 0
+        for node in problem.getSuccessors(currNode[0]): # agregamos sucesores a la pila
+            if node[0] not in visited:
+                options += 1
+                s.push(node)
+        print(path.list)
+        if options == 0: # si todos los sucesores fueron visitados, backtrackeamos
+            path.pop()
+            print("backtrack: ", path.list)
+            print("stack: ", s.list)
+
+    return path.list
+
+    """
+    camino = Stack()
+    colaNodos = problem.getStartState()
+    for nodo in colaNodos:
+        if nodo isGoal:
+            return camino.push(nodo.direccion)
+        colaNodos.push(nodo.getSuccesors)
+        
+
+    util.raiseNotDefined()"""
 
 def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
     """Search the shallowest nodes in the search tree first."""
