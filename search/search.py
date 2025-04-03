@@ -98,6 +98,7 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
     s = util.Stack()
 
     visited = set()
+    visited.add(startState[0])
 
     for node in problem.getSuccessors(startState):
         s.push(node) # pusheamos al stack los sucesores del estado inicial
@@ -120,7 +121,7 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
             print("backtrack: ", path.list)
             print("stack: ", s.list)
 
-    return path.list
+    return path.list # debería ser error porque la lista es vacía? nunca halló la meta
 
     """
     camino = Stack()
