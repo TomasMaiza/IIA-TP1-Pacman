@@ -103,7 +103,7 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
             if node[0] not in visited:
                 s.push((node, level+1))
 
-    return path.list # debería ser error porque la lista es vacía? nunca halló la meta
+    return [] # nunca halló la meta
 
 
 def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
@@ -145,8 +145,39 @@ def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
 
 def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
     """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+
+    startState = problem.getStartState()
+    if problem.isGoalState(startState):
+        return []
+
+    # registramos los nodos previamente visitados
+    visited = set()
+    visited.add(startState)
+
+    q = util.PriorityQueue() # priority queue para acceso rápido al nodo menos costoso
+    # agregamos los sucesores iniciales al queue
+    for node in problem.getSuccessors(startState):
+        q.push((node, util.Stack()), node[2])
+        visited.add(node[0])
+
+    while not q.isEmpty():
+        ((state, dir, _), path) = q.pop()
+        # construimos un camino para cada nodo, de manera que al encontrar
+        # el estado final, tengamos computado el camino tomado para alcanzarlo
+        path.push(dir)
+
+        if problem.isGoalState(state):
+            return path.list
+
+        for node in problem.getSuccessors(state):
+            if node[0] not in visited:
+                visited.add(node[0])
+                # debemos hacer una copia profunda para evitar que se modifique
+                # el mismo camino para distintos nodos
+                q.push((node, deepcopy(path)), node[2])
+
+    return [] # Error: No se encontro la meta
+    
 
 def nullHeuristic(state, problem=None) -> float:
     """
