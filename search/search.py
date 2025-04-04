@@ -161,7 +161,7 @@ def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
         visited.add(node[0])
 
     while not q.isEmpty():
-        ((state, dir, _), path) = q.pop()
+        ((state, dir, cost), path) = q.pop()
         # construimos un camino para cada nodo, de manera que al encontrar
         # el estado final, tengamos computado el camino tomado para alcanzarlo
         path.push(dir)
@@ -170,11 +170,12 @@ def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
             return path.list
 
         for node in problem.getSuccessors(state):
-            if node[0] not in visited:
-                visited.add(node[0])
+            (succState, succDir, succCost) = node
+            if succState not in visited:
+                visited.add(succState)
                 # debemos hacer una copia profunda para evitar que se modifique
                 # el mismo camino para distintos nodos
-                q.push((node, deepcopy(path)), node[2])
+                q.push(((succState, succDir, succCost + cost), deepcopy(path)), succCost + cost)
 
     return [] # Error: No se encontro la meta
     
@@ -188,8 +189,41 @@ def nullHeuristic(state, problem=None) -> float:
 
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic) -> List[Directions]:
     """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    
+    startState = problem.getStartState()
+    if problem.isGoalState(startState):
+        return []
+
+    # registramos los nodos previamente visitados
+    visited = set()
+    visited.add(startState)
+
+    q = util.PriorityQueue() # priority queue para acceso rápido al nodo menos costoso
+    # agregamos los sucesores iniciales al queue
+    for node in problem.getSuccessors(startState):
+        (state, _, cost) = node
+        q.push((node, util.Stack()), cost + heuristic(state, problem))
+        visited.add(state)
+
+    while not q.isEmpty():
+        ((state, dir, cost), path) = q.pop()
+        # construimos un camino para cada nodo, de manera que al encontrar
+        # el estado final, tengamos computado el camino tomado para alcanzarlo
+        path.push(dir)
+
+        if problem.isGoalState(state):
+            return path.list
+
+        for node in problem.getSuccessors(state):
+            (succState, succDir, succCost) = node
+            if succState not in visited:
+                visited.add(succState)
+                # debemos hacer una copia profunda para evitar que se modifique
+                # el mismo camino para distintos nodos
+                q.push(((succState, succDir, succCost + cost), deepcopy(path)), succCost + cost + heuristic(succState, problem))
+
+    return [] # Error: No se encontro la meta
+
 
 # Abbreviations
 bfs = breadthFirstSearch
