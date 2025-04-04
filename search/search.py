@@ -78,24 +78,8 @@ def tinyMazeSearch(problem: SearchProblem) -> List[Directions]:
     return  [s, s, w, s, w, w, s, w]
 
 def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
-    """
-    Search the deepest nodes in the search tree first.
-
-    Your search algorithm needs to return a list of actions that reaches the
-    goal. Make sure to implement a graph search algorithm.
-
-    To get started, you might want to try some of these simple commands to
-    understand the search problem that is being passed in:
-
-    print("Start:", problem.getStartState())
-    print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
-    print("Start's successors:", problem.getSuccessors(problem.getStartState()))
-    """
-    "*** YOUR CODE HERE ***"
+    """Search the deepest nodes in the search tree first."""
     startState = problem.getStartState()
-    print("Start:", startState)
-    print("Is the start a goal?", problem.isGoalState(startState))
-    print("Start's successors:", problem.getSuccessors(startState))
     path = util.Stack()
     s = util.Stack()
 
@@ -103,7 +87,7 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
     visited.add(startState[0])
 
     for node in problem.getSuccessors(startState):
-        s.push((node, 0)) # pusheamos al stack los sucesores del estado inicial
+        s.push((node, 0)) # pusheamos al stack los sucesores del estado inicial y su nivel
 
     while not s.isEmpty(): # si hay nodos en la pila, recorremos
         (currNode, level) = s.pop()
@@ -115,26 +99,15 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
         if problem.isGoalState(currNode[0]): # si el nodo es meta terminamos la búsqueda
             return path.list
         
-        options = 0
         for node in problem.getSuccessors(currNode[0]): # agregamos sucesores a la pila
             if node[0] not in visited:
-                options += 1
                 s.push((node, level+1))
-
-        # print(path.list)
-        if options == 0: # si todos los sucesores fueron visitados, backtrackeamos
-            path.pop()
-            # print("backtrack: ", path.list)
-            # print("stack: ", s.list)
 
     return path.list # debería ser error porque la lista es vacía? nunca halló la meta
 
 
 def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
     """Search the shallowest nodes in the search tree first."""
-    # print("Start:", problem.getStartState())
-    # print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
-    # print("Start's successors:", problem.getSuccessors(problem.getStartState()))
 
     startState = problem.getStartState()
     if problem.isGoalState(startState):
