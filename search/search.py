@@ -21,6 +21,8 @@ import util
 from game import Directions
 from typing import List
 
+from copy import deepcopy
+
 class SearchProblem:
     """
     This class outlines the structure of a search problem, but doesn't implement
@@ -101,10 +103,13 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
     visited.add(startState[0])
 
     for node in problem.getSuccessors(startState):
-        s.push(node) # pusheamos al stack los sucesores del estado inicial
+        s.push((node, 0)) # pusheamos al stack los sucesores del estado inicial
 
     while not s.isEmpty(): # si hay nodos en la pila, recorremos
-        currNode = s.pop()
+        (currNode, level) = s.pop()
+        for _ in range(0, len(path.list) - level):
+            path.pop() # backtrackeamos hasta igualar el nivel del siguiente nodo
+
         visited.add(currNode[0])
         path.push(currNode[1])
         if problem.isGoalState(currNode[0]): # si el nodo es meta terminamos la búsqueda
@@ -114,30 +119,56 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
         for node in problem.getSuccessors(currNode[0]): # agregamos sucesores a la pila
             if node[0] not in visited:
                 options += 1
-                s.push(node)
-        print(path.list)
+                s.push((node, level+1))
+
+        # print(path.list)
         if options == 0: # si todos los sucesores fueron visitados, backtrackeamos
             path.pop()
-            print("backtrack: ", path.list)
-            print("stack: ", s.list)
+            # print("backtrack: ", path.list)
+            # print("stack: ", s.list)
 
     return path.list # debería ser error porque la lista es vacía? nunca halló la meta
 
-    """
-    camino = Stack()
-    colaNodos = problem.getStartState()
-    for nodo in colaNodos:
-        if nodo isGoal:
-            return camino.push(nodo.direccion)
-        colaNodos.push(nodo.getSuccesors)
-        
-
-    util.raiseNotDefined()"""
 
 def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    # print("Start:", problem.getStartState())
+    # print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
+    # print("Start's successors:", problem.getSuccessors(problem.getStartState()))
+
+    startState = problem.getStartState()
+    if problem.isGoalState(startState):
+        return []
+
+    # registramos los nodos previamente visitados
+    visited = set()
+    visited.add(startState)
+
+    q = util.Queue()
+    # agregamos los sucesores iniciales al queue
+    for node in problem.getSuccessors(startState):
+        q.push((node, util.Stack()))
+        visited.add(node[0])
+
+    while not q.isEmpty():
+        ((state, dir, _), path) = q.pop()
+        # construimos un camino para cada nodo, de manera que al encontrar
+        # el estado final, tengamos computado el camino tomado para alcanzarlo
+        path.push(dir)
+
+        if problem.isGoalState(state):
+            return path.list
+
+        for node in problem.getSuccessors(state):
+            if node[0] not in visited:
+                visited.add(node[0])
+                # debemos hacer una copia profunda para evitar que se modifique
+                # el mismo camino para distintos nodos
+                q.push((node, deepcopy(path)))
+
+    return [] # Error: No se encontro la meta
+    
+
 
 def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
     """Search the node of least total cost first."""
