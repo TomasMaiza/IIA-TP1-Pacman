@@ -372,8 +372,34 @@ def cornersHeuristic(state: Any, problem: CornersProblem):
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
     "*** YOUR CODE HERE ***"
-    return 0 # Default to trivial solution
 
+    # la distancia a la esquina no visitada más cercana?
+    # sumar las distancias de la distancia a cada esquina?
+    # por ej: la más cercana es c1 a distancia d1, luego la distancia
+    # de c1 a su más cercana c2 es d2, entonces sumo d1 + d2
+    
+    position, notVisitedCorners = state
+    cornersSet = set(notVisitedCorners)
+
+    if not cornersSet:
+        return 0
+    
+    distances = set()
+
+    for x2, y2 in notVisitedCorners:
+        x1, y1 = position
+        cornersSet = set(notVisitedCorners)
+        dist = abs(x1 - x2) + abs(y1 - y2)
+        x1 = x2
+        y1 = y2
+        cornersSet.remove((x2, y2))
+        for x3, y3 in cornersSet:
+            dist += abs(x1 - x3) + abs(y1 - y3)
+        distances.add(dist)
+
+    mindist = min(distances)
+
+    return mindist
 
 
 class AStarCornersAgent(SearchAgent):
