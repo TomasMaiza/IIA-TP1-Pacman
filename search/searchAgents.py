@@ -307,6 +307,7 @@ class CornersProblem(search.SearchProblem):
 
         # si no hay elementos en el conjunto de state (ya visitó todas las esquinas), llegó a la meta
         _, notVisitedCorners = state
+
         return len(notVisitedCorners) == 0
 
     def getSuccessors(self, state: Any):
@@ -354,7 +355,6 @@ class CornersProblem(search.SearchProblem):
         return len(actions)
 
 
-
 def cornersHeuristic(state: Any, problem: CornersProblem):
     """
     A heuristic for the CornersProblem that you defined.
@@ -368,39 +368,27 @@ def cornersHeuristic(state: Any, problem: CornersProblem):
     shortest path from the state to a goal of the problem; i.e.  it should be
     admissible.
     """
-    corners = problem.corners # These are the corner coordinates
-    walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
-
-    "*** YOUR CODE HERE ***"
-
     # la distancia a la esquina no visitada más cercana?
     # sumar las distancias de la distancia a cada esquina?
     # por ej: la más cercana es c1 a distancia d1, luego la distancia
     # de c1 a su más cercana c2 es d2, entonces sumo d1 + d2
     
-    position, notVisitedCorners = state
-    cornersSet = set(notVisitedCorners)
+    from itertools import permutations
 
-    if not cornersSet:
+    position, notVisitedCorners = state
+
+    if not notVisitedCorners:
         return 0
     
+    allPaths = list(permutations(notVisitedCorners))
     distances = set()
+    for path in allPaths:
+        sum = util.manhattanDistance(position, path[0])
+        for index in range(len(path)-1):
+            sum += util.manhattanDistance(path[index], path[index+1])
+        distances.add(sum)
 
-    for x2, y2 in notVisitedCorners:
-        x1, y1 = position
-        cornersSet = set(notVisitedCorners)
-        dist = abs(x1 - x2) + abs(y1 - y2)
-        x1 = x2
-        y1 = y2
-        cornersSet.remove((x2, y2))
-        for x3, y3 in cornersSet:
-            dist += abs(x1 - x3) + abs(y1 - y3)
-        distances.add(dist)
-
-    mindist = min(distances)
-
-    return mindist
-
+    return min(distances)
 
 class AStarCornersAgent(SearchAgent):
     "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
