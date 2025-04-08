@@ -117,14 +117,14 @@ def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
     visited = set()
     visited.add(startState)
 
-    q = util.Queue()
+    succesors = util.Queue()
     # agregamos los sucesores iniciales al queue
     for node in problem.getSuccessors(startState):
-        q.push((node, util.Stack()))
+        succesors.push((node, util.Stack()))
         visited.add(node[0])
 
-    while not q.isEmpty():
-        ((state, dir, _), path) = q.pop()
+    while not succesors.isEmpty():
+        ((state, dir, _), path) = succesors.pop()
         # construimos un camino para cada nodo, de manera que al encontrar
         # el estado final, tengamos computado el camino tomado para alcanzarlo
         path.push(dir)
@@ -137,7 +137,7 @@ def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
                 visited.add(node[0])
                 # debemos hacer una copia profunda para evitar que se modifique
                 # el mismo camino para distintos nodos
-                q.push((node, deepcopy(path)))
+                succesors.push((node, deepcopy(path)))
 
     return [] # Error: No se encontro la meta
     

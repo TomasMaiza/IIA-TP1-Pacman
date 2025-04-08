@@ -13,9 +13,9 @@ habría que explicar más o menos qué solución dimos y qué resultados obtuvim
 
 # Ejercicio 1
 
-El algoritmo DFS busca los nodos más profundos del árbol de búsqueda sin expandir nodos ya visitados.
+El algoritmo DFS busca los nodos más profundos del árbol de búsqueda sin expandir nodos ya visitados a partir de una instancia del problema de búsqueda.
 
-Nuestra implementación lleva una pila de direcciones (el camino recorrido), una pila que contiene los nodos próximos a visitar (los sucesores de los nodos que visita) y un conjunto de estados ya visitados.
+Nuestra implementación lleva una **pila** de direcciones (el camino recorrido), una **pila** que contiene los nodos próximos a visitar (los sucesores de los nodos que visita) y un conjunto de estados ya visitados.
 
 Siguiendo el algoritmo de búsqueda general, cuando visitamos un nodo chequeamos si es meta, en cuyo caso retornamos la lista de direcciones acumuladas. En caso contrario apilamos sus sucesores no visitados en la pila de nodos a visitar (es decir, los visitamos primero). Cada nodo recorrido es agregado al conjunto de nodos visitados y la dirección tomada para llegar a él es agregada a la pila del path. Cuando retrocedemos en el árbol (porque el camino tomado no nos lleva a nada) desapilamos tantas direcciones como diferencia haya entre el nivel del nodo actual y el tamaño de la pila, ya que el camino tiene exactamente un nodo por cada nivel. Por ejemplo, si llegamos al nivel 4 del árbol, la pila del path podría verse así:
 
@@ -38,6 +38,20 @@ Los resultados obtenidos fueron los siguientes:
 ![bigMaze](images/dfs_bigMaze.png)
 
 # Ejercicio 2
+
+El algoritmo BFS recorre el árbol de búsqueda por niveles a partir de una instancia del problema de búsqueda.
+
+Nuestra implementación lleva una **cola** de pares (estado, **pila** del camino recorrido hasta el nodo) con los sucesores del nodo actual y un conjunto de estados ya visitados.
+
+También siguiendo el algoritmo de búsqueda general, chequeamos si el nodo visitado es meta en cuyo caso devolvemos la lista asociada al camino del nodo. En caso contrario, agregamos los sucesores del nodo al final de la cola (siempre y cuando no hayan sido visitados previamente).
+
+Los resultados obtenidos fueron los siguientes:
+
+- Mapa mediumMaze: 269 nodos expandidos, costo 68
+- Mapa bigMaze: 620 nodos expandidos, costo 210
+
+![mediumMaze](images/bfs_mediumMaze.png)
+![bigMaze](images/bfs_bigMaze.png)
 
 # Ejercicio 3
 
