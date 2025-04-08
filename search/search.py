@@ -81,16 +81,16 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
     """Search the deepest nodes in the search tree first."""
     startState = problem.getStartState()
     path = util.Stack()
-    s = util.Stack()
+    succesors = util.Stack()
 
     visited = set()
     visited.add(startState[0])
 
     for node in problem.getSuccessors(startState):
-        s.push((node, 0)) # pusheamos al stack los sucesores del estado inicial y su nivel
+        succesors.push((node, 0)) # pusheamos al stack los sucesores del estado inicial y su nivel
 
-    while not s.isEmpty(): # si hay nodos en la pila, recorremos
-        (currNode, level) = s.pop()
+    while not succesors.isEmpty(): # si hay nodos en la pila, recorremos
+        (currNode, level) = succesors.pop()
         for _ in range(0, len(path.list) - level):
             path.pop() # backtrackeamos hasta igualar el nivel del siguiente nodo
 
@@ -101,7 +101,7 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
         
         for node in problem.getSuccessors(currNode[0]): # agregamos sucesores a la pila
             if node[0] not in visited:
-                s.push((node, level+1))
+                succesors.push((node, level+1))
 
     return [] # nunca halló la meta
 

@@ -380,7 +380,7 @@ def cornersHeuristic(state: Any, problem: CornersProblem):
     if not notVisitedCorners:
         return 0
     
-    allPaths = list(permutations(notVisitedCorners))
+    allPaths = permutations(notVisitedCorners)
     distances = set()
     for path in allPaths:
         sum = util.manhattanDistance(position, path[0])
