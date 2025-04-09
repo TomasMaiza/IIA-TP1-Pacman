@@ -77,9 +77,25 @@ Los resultados obtenidos fueron los siguientes:
 
 ![bigMaze](images/astar_bigMaze.png)
 
+En el laberinto openMaze obtenemos estos resultados para distintas estrategias de búsqueda:
+
+- A*: 535 nodos expandidos, costo 54
+- UCS: 682 nodos expandidos, costo 54
+- BFS: 682 nodos expandidos, costo 54
+- DFS: 806 nodos expandidos, costo 298
+
+![openMazeAStar](images/astar_openMaze.png)
+![openMazeUCS](images/ucs_openMaze.png)
+![openMazeBFS](images/bfs_openMaze.png)
+![openMazeDFS](images/dfs_openMaze.png)
+
+Con alguna diferencia en la cantidad de nodos expandidos, los algoritmos A* con heurística distancia de Manhattan, UCS y BFS encuentran el camino óptimo. Por otro lado, DFS expande más nodos y encuentra un camino muy costoso por el hecho de aplicarse en un grafo muy grande. Como el mapa es muy abierto, tomando caminos largos logra encontrar la meta.
+
 
 # Ejercicio 5
 
 # Ejercicio 6
 
 # Ejercicio 7
+
+**FALTA HACER (LIBO :3)**
