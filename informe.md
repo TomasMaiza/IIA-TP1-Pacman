@@ -55,6 +55,18 @@ Los resultados obtenidos fueron los siguientes:
 
 # Ejercicio 3
 
+La búsqueda de costo uniforme (UCS) expande el nodo de menor costo. También adaptando el algoritmo general de búsqueda, tomamos como base el algoritmo para BFS pero con la modificación de que la lista de sucesores es una cola de prioridad, donde la prioridad es el valor del costo acumulado hasta visitar el nodo.
+
+Los resultados obtenidos fueron los siguientes:
+
+- Mapa mediumMaze: 269 nodos expandidos, costo 68 
+- Mapa mediumDottedMaze: 186 nodos expandidos, costo 1 
+- Mapa mediumScaryMaze: 108 nodos expandidos, costo 68719479864
+
+![mediumMaze](images/ucs_mediumMaze.png)
+![mediumDottedMaze](images/ucs_mediumDottedMaze.png)
+![mediumScaryMaze](images/ucs_mediumScaryMaze.png)
+
 # Ejercicio 4
 
 # Ejercicio 5

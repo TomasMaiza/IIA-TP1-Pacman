@@ -154,14 +154,14 @@ def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
     visited = set()
     visited.add(startState)
 
-    q = util.PriorityQueue() # priority queue para acceso rápido al nodo menos costoso
+    succesors = util.PriorityQueue() # priority queue para acceso rápido al nodo menos costoso
     # agregamos los sucesores iniciales al queue
     for node in problem.getSuccessors(startState):
-        q.push((node, util.Stack()), node[2])
+        succesors.push((node, util.Stack()), node[2])
         visited.add(node[0])
 
-    while not q.isEmpty():
-        ((state, dir, cost), path) = q.pop()
+    while not succesors.isEmpty():
+        ((state, dir, cost), path) = succesors.pop()
         # construimos un camino para cada nodo, de manera que al encontrar
         # el estado final, tengamos computado el camino tomado para alcanzarlo
         path.push(dir)
@@ -175,7 +175,7 @@ def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
                 visited.add(succState)
                 # debemos hacer una copia profunda para evitar que se modifique
                 # el mismo camino para distintos nodos
-                q.push(((succState, succDir, succCost + cost), deepcopy(path)), succCost + cost)
+                succesors.push(((succState, succDir, succCost + cost), deepcopy(path)), succCost + cost)
 
     return [] # Error: No se encontro la meta
     
