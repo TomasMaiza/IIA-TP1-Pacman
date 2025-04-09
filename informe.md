@@ -89,10 +89,19 @@ En el laberinto openMaze obtenemos estos resultados para distintas estrategias d
 ![openMazeBFS](images/bfs_openMaze.png)
 ![openMazeDFS](images/dfs_openMaze.png)
 
-Con alguna diferencia en la cantidad de nodos expandidos, los algoritmos A* con heurística distancia de Manhattan, UCS y BFS encuentran el camino óptimo. Por otro lado, DFS expande más nodos y encuentra un camino muy costoso por el hecho de aplicarse en un grafo muy grande. Como el mapa es muy abierto, tomando caminos largos logra encontrar la meta.
-
+Con alguna diferencia en la cantidad de nodos expandidos, los algoritmos A* con heurística distancia de Manhattan, UCS y BFS encuentran el camino óptimo. Por otro lado, DFS expande más nodos y encuentra un camino muy costoso por el hecho de aplicarse en un árbol muy grande. Como el mapa es muy abierto, tomando caminos largos logra encontrar la meta.
 
 # Ejercicio 5
+
+Elegimos representar el estado como una tupla (Posición, Conjunto de esquinas no visitadas). De esta manera, el estado inicial contiene un conjunto con las 4 esquinas del mapa, y a medida que se van visitando, se retiran. El estado será meta si el conjunto de esquinas no visitadas es vacío, es decir, si ya se visitaron todas las esquinas. A la hora de obtener los sucesores de un estado se revisa si el sucesor es una esquina para eliminarlo del conjunto correspondiente al estado sucesor.
+
+Se obtuvieron los siguientes resultados:
+
+- Mapa tinyCorners con bfs: 252 nodos expandidos, costo 28 
+- Mapa mediumCorners con bfs: 1966 nodos expandidos, costo 106 
+  
+![tinyCornersbfs](images/bfs_tinyCorners.png)
+![mediumCornersbfs](images/bfs_mediumCorners.png)
 
 # Ejercicio 6
 
