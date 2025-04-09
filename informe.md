@@ -55,7 +55,7 @@ Los resultados obtenidos fueron los siguientes:
 
 # Ejercicio 3
 
-La búsqueda de costo uniforme (UCS) expande el nodo de menor costo. También adaptando el algoritmo general de búsqueda, tomamos como base el algoritmo para BFS pero con la modificación de que la lista de sucesores es una cola de prioridad, donde la prioridad es el valor del costo acumulado hasta visitar el nodo.
+La búsqueda de costo uniforme (UCS) expande el nodo de menor costo. También adaptando el algoritmo general de búsqueda, tomamos como base el algoritmo para BFS pero con la modificación de que la lista de sucesores es una **cola de prioridad**, donde la prioridad es el valor del costo acumulado hasta visitar el nodo.
 
 Los resultados obtenidos fueron los siguientes:
 
@@ -68,6 +68,15 @@ Los resultados obtenidos fueron los siguientes:
 ![mediumScaryMaze](images/ucs_mediumScaryMaze.png)
 
 # Ejercicio 4
+
+El algoritmo para la búsqueda A* es idéntico al de UCS, con la única diferencia de que al costo se le suma el valor de una **heurística** en el nodo.
+
+Los resultados obtenidos fueron los siguientes:
+
+- Mapa bigMaze: 549 nodos expandidos, costo 210
+
+![bigMaze](images/astar_bigMaze.png)
+
 
 # Ejercicio 5
 
