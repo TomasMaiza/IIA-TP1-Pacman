@@ -105,6 +105,26 @@ Se obtuvieron los siguientes resultados:
 
 # Ejercicio 6
 
+La heurística implementada consiste en calcular la distancia de Manhattan total a recorrer para comer todas las pastillas en las esquinas según qué esquina se visita primero. Por ejemplo, si quedan pastillas en las esquinas $C_1, C_2$ y $C_3$, se evalúa primero la distancia del agente a la esquina $C_1$, a eso se suma la distancia de $C_1$ a $C_2$ y de $C_2$ a $C_3$, obteniendo el valor $v_1$, y la otra combinación posible si se visita primero $C_1$ es visitar desde allí $C_3$ y luego $C_2$, obteniendo el valor $v_2$ sumando las distancias recorridas. Así, se evalúan todas las combinaciones posibles y el valor de la heurística será el mínimo valor entre todas ellas.
+
+Veamos que esta heurística es consistente:
+
+Una heurística $h$ es **consistente** si para cada nodo $n$ y cada sucesor $n'$ de $n$ generado por la acción $a$, vale que $h(n) \leq c(n, a, n') + h(n')$.
+
+Sea $n'$ un sucesor del nodo $n$. Queremos calcular el valor de la heurística en dicho nodo, $h(n')$. Como $n'$ es sucesor de $n$, se hizo un único movimiento desde $n$ a $n'$ en dirección a la esquina que minimice la distancia de Manhattan total para visitar todas las esquinas (ya que $h(n)$ nos devuelve esa distancia mínima). Por lo tanto, ahora la distancia se decrementó en una cuadra: $h(n') = h(n) - 1$. Si con este movimiento ahora conviniera visitar otra esquina primero, el valor de la heurística será el mismo (al considerar todas las combinaciones posibles, no se producirán diferencias de más de una unidad en el valor de las distancias medidas al pasar de un nodo a otro). Luego, sabiendo que $c(n, a, n') = 1$ para toda acción $a$, tenemos que:
+
+$$c(n, a, n') + h(n') = 1 + h(n) - 1 = h(n)$$
+
+Por lo tanto, como se cumple la condición de que $h(n) \leq c(n, a, n') + h(n')$, se tiene que la heurística $h$ es **consistente**.
+
+Anteriormente planteamos que la heurística fuera la distancia de Manhattan a la esquina más cercana, pero esta no era consistente ya que al consumir una esquina, la distancia a la siguiente esquina más cercana aumentaría en más de una unidad (al alcanzar la esquina la distancia a ella era 1, ahora la distancia a la siguiente esquina sería la longitud de un lado del laberinto). De esta forma sucedería que para algún $n$ y algún sucesor $n'$, se daría que $h(n') = h(n) + k$ con $k > 1$ y por lo tanto, $c(n, a, n') + h(n') = 1 + h(n) + k > h(n)$.
+
+Con nuestra heurística obtuvimos los siguientes resultados:
+
+- Mapa mediumCorners con A* y CornersHeuristic: 
+
+![mediumCornersAstar](images/astar_mediumCorners.png)
+
 # Ejercicio 7
 
 **FALTA HACER (LIBO :3)**
