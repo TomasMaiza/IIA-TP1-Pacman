@@ -121,7 +121,7 @@ Anteriormente planteamos que la heurística fuera la distancia de Manhattan a la
 
 Con nuestra heurística obtuvimos los siguientes resultados:
 
-- Mapa mediumCorners con A* y CornersHeuristic: 
+- Mapa mediumCorners con A* y CornersHeuristic: 741 nodos expandidos, costo 106
 
 ![mediumCornersAstar](images/astar_mediumCorners.png)
 
