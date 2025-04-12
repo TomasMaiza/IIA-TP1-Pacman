@@ -485,7 +485,7 @@ def foodHeuristic(state: Tuple[Tuple, List[List]], problem: FoodSearchProblem):
 
     minDistance = min([util.manhattanDistance(position, foodPos) for foodPos in foodList])
 
-    return foodCount + minDistance
+    return foodCount + minDistance - 1
 
 
 class ClosestDotSearchAgent(SearchAgent):
