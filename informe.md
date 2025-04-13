@@ -9,8 +9,6 @@ header-includes:
   - \usepackage{amssymb}
 ---
 
-habría que explicar más o menos qué solución dimos y qué resultados obtuvimos
-
 # Ejercicio 1
 
 El algoritmo DFS busca los nodos más profundos del árbol de búsqueda sin expandir nodos ya visitados a partir de una instancia del problema de búsqueda.
@@ -141,13 +139,13 @@ decrecer por más de 1 punto en el caso en que no se la consuma. Si la píldora 
 la siguiente distancia a calcular necesariamente va a ser mayor o igual a 1 (en el caso de una píldora adyacente).  
 Además, el costo es igual a 1 para todas las direcciones en el laberinto.
 
-Suponiendo que no se consume una píldora:
+Suponiendo que **no** se consume una píldora:
 
 Sea $h(n) = x + y - 1$, siendo 'x' la distancia de manhattan a la píldora más cercana e 'y' la cantidad de píldoras;
 
 $x + y - 1 \leq 1 + (x-1) + y - 1 \implies x + y \leq 1 + x - 1 + y = x + y$, lo que cumple la inecuación.
 
-Suponiendo que sí se consume una píldora:
+Suponiendo que **sí** se consume una píldora:
 
 Sea 'z' la distancia a la siguiente píldora, $1 \leq z$ (en caso de píldora adyacente) y $x = 1$;
 
@@ -156,3 +154,8 @@ $1 + y - 1 = y \leq 1 + z + (y-1) - 1 \implies y \leq z + y - 1$ y como $1 \leq 
 Entonces, se cumple que la heurística es consistente y por lo tanto admisible, por lo que va a encontrar 
 una solución óptima.
 
+Con nuestra heurística obtuvimos los siguientes resultados:
+
+- Mapa trickySearch con A* y foodHeuristic: 10908 nodos expandidos, costo 60
+
+![mediumCornersAstar](images/astar_trickySearch.png)
