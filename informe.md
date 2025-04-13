@@ -127,4 +127,32 @@ Con nuestra heurística obtuvimos los siguientes resultados:
 
 # Ejercicio 7
 
-**FALTA HACER (LIBO :3)**
+La heurística en este caso consiste en calcular un camino relajado por sobre todas las píldoras tomando 
+la distancia de manhattan respecto a la píldora más cercana sumado a la cantidad de píldoras restantes menos uno 
+(puesto que al tomar esa distancia también estamos contando la propia píldora).
+
+Ahora probemos que es consistente (y por lo tanto, admisible):
+
+Una heurística $h$ es **consistente** si para cada nodo $n$ y cada sucesor $n'$ de $n$ generado 
+por la acción $a$, vale que $h(n) \leq c(n, a, n') + h(n')$.
+
+Siendo n' sucesor de n, como tomamos la distancia de manhattan a la píldora más cercana, esta no puede
+decrecer por más de 1 punto en el caso en que no se la consuma. Si la píldora más cercana es consumida, 
+la siguiente distancia a calcular necesariamente va a ser mayor o igual a 1 (en el caso de una píldora adyacente).  
+Además, el costo es igual a 1 para todas las direcciones en el laberinto.
+
+Suponiendo que no se consume una píldora:
+
+Sea $h(n) = x + y - 1$, siendo 'x' la distancia de manhattan a la píldora más cercana e 'y' la cantidad de píldoras;
+
+$x + y - 1 \leq 1 + (x-1) + y - 1 \implies x + y \leq 1 + x - 1 + y = x + y$, lo que cumple la inecuación.
+
+Suponiendo que sí se consume una píldora:
+
+Sea 'z' la distancia a la siguiente píldora, $1 \leq z$ (en caso de píldora adyacente) y $x = 1$;
+
+$1 + y - 1 = y \leq 1 + z + (y-1) - 1 \implies y \leq z + y - 1$ y como $1 \leq z$ se cumple la inecuación.
+
+Entonces, se cumple que la heurística es consistente y por lo tanto admisible, por lo que va a encontrar 
+una solución óptima.
+

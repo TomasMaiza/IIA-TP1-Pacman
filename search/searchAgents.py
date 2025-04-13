@@ -485,6 +485,8 @@ def foodHeuristic(state: Tuple[Tuple, List[List]], problem: FoodSearchProblem):
 
     minDistance = min([util.manhattanDistance(position, foodPos) for foodPos in foodList])
 
+    # Le restamos 1 a la distancia minima para no contar 2 veces la
+    # pildora en la posicion final.
     return foodCount + minDistance - 1
 
 
