@@ -129,6 +129,11 @@ La heurística en este caso consiste en calcular un camino relajado por sobre to
 la distancia de manhattan respecto a la píldora más cercana sumado a la cantidad de píldoras restantes menos uno 
 (puesto que al tomar esa distancia también estamos contando la propia píldora).
 
+Elegimos esta heurística por su simpleza, ya que al intentar implementar una heurística similar al del 
+problema de las esquinas se nos fue de las manos el tiempo de ejecución. La idea fue entonces intentar 
+obtener una heurística que sea consistente y rápida, pero no necesariamente la mejor en cantidad de 
+nodos expandidos.
+
 Ahora probemos que es consistente (y por lo tanto, admisible):
 
 Una heurística $h$ es **consistente** si para cada nodo $n$ y cada sucesor $n'$ de $n$ generado 
