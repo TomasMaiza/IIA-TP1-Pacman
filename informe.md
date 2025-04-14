@@ -25,6 +25,8 @@ path = ['N']
 
 es decir, borramos el camino recorrido hasta volver al nivel 2, donde será pusheada la dirección tomada para llegar al nodo actual.
 
+El orden de exploración es el esperado y Pacman no debe ir por todas las casillas exploradas ya que muchas veces estará explorando un camino incorrecto y deberá retroceder.
+
 Los resultados obtenidos fueron los siguientes:
 
 - Mapa tinyMaze: 16 nodos expandidos, costo 10
